@@ -7,6 +7,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     /**
+     * @var int
+     */
+    private $id;
+
+    /**
      * @var string|null $email
      */
     private $email;
@@ -28,7 +33,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->uuid;
+        return (string) $this->email;
     }
 
     /**
@@ -98,5 +103,12 @@ class User implements UserInterface
     {
         $this->email = $email;
         return $this;
+    }
+
+    public function initialize(int $id, string $email, string $password)
+    {
+        $this->id = $id;
+        $this->email = $email;
+        $this->password = $password;
     }
 }
