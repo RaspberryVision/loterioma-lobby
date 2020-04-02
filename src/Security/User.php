@@ -16,17 +16,10 @@ class User implements UserInterface
      */
     private $password;
 
-    public function getUuid(): ?string
-    {
-        return $this->uuid;
-    }
-
-    public function setUuid(string $uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
+    /**
+     * @var array
+     */
+    private $roles;
 
     /**
      * A visual identifier that represents this user.
