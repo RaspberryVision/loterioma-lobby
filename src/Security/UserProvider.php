@@ -6,7 +6,6 @@ use App\Model\DTO\Network\NetworkRequest;
 use App\Model\DTO\Network\NetworkResponse;
 use App\NetworkHelper\DataStore\DataStoreHelper;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -20,11 +19,10 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      * If you're not using these features, you do not need to implement
      * this method.
      *
+     * @param string $username
      * @return UserInterface
-     *
-     * @throws UsernameNotFoundException if the user is not found
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername(string $username)
     {
         return $this->getUser($username);
     }
@@ -40,6 +38,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      * If your firewall is "stateless: true" (for a pure API), this
      * method is not called.
      *
+     * @param UserInterface $user
      * @return UserInterface
      */
     public function refreshUser(UserInterface $user)
@@ -53,14 +52,18 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 
     /**
      * Tells Symfony to use this provider for this User class.
+     * @param $class
+     * @return bool
      */
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return User::class === $class;
     }
 
     /**
      * Upgrades the encoded password of a user, typically for using a better hash algorithm.
+     * @param UserInterface $user
+     * @param string $newEncodedPassword
      */
     public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
     {
@@ -69,7 +72,11 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         // 2. update the $user object with $user->setPassword($newEncodedPassword);
     }
 
-    private function getUser($username)
+    /**
+     * @param $username
+     * @return User
+     */
+    private function getUser($username): ?User
     {
         $dataStoreHelper = new DataStoreHelper();
 
@@ -83,11 +90,23 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
             ]
         ));
 
+        if (0 === count($networkResponse->getBody())) {
+            return null;
+        }
+
         return $this->createUser($networkResponse->getBody()[0]);
     }
 
-    private function createUser(array $data)
+    /**
+     * @param array $data
+     * @return User|null
+     */
+    private function createUser(array $data): ?User
     {
+        if (!$data['id']) {
+            return null;
+        }
+
         $user = new User();
         $user->initialize($data['id'], $data['email'], $data['password']);
         return $user;
