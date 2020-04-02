@@ -75,11 +75,11 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 
         /** @var NetworkResponse $networkResponse */
         $networkResponse = $dataStoreHelper->fetchUser(new NetworkRequest(
-            '/members',
+            '/members?email=' . $username,
             'GET',
             'asdsad',
             [
-                'username' => $username
+                'email' => $username
             ]
         ));
 
