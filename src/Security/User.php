@@ -6,10 +6,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface
 {
-    private $uuid;
-
-    private $roles = [];
-
     /**
      * @var string|null $email
      */
