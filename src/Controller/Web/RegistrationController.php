@@ -2,6 +2,8 @@
 
 namespace App\Controller\Web;
 
+use App\Model\DTO\Network\NetworkRequest;
+use App\NetworkHelper\DataStore\DataStoreHelper;
 use App\Security\User;
 use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +17,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="web_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, DataStoreHelper $dataStoreHelper): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -29,11 +31,30 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            return $this->redirectToRoute('_profiler');
+            $response = $dataStoreHelper->storeUser(new NetworkRequest(
+                '/members',
+                'POST',
+                'sadasdas',
+                [
+                    'email' => $user->getEmail(),
+                    'password' => $user->getPassword()
+                ]
+            ));
+
+            return $this->redirectToRoute('web_register_success');
         }
 
         return $this->render('web/registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/register/success", name="web_register_success")
+     */
+    public function success(Request $request): Response
+    {
+        return $this->render('web/registration/success.html.twig', [
         ]);
     }
 }
