@@ -96,8 +96,6 @@ abstract class AbstractNetworkHelper
 
         $response = curl_exec($ch);
 
-        var_dump($response);
-
         if (!$response) {
             return $this->createResponse(json_encode([
                 'message' => curl_error($ch),

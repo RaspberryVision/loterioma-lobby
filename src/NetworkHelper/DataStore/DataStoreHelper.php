@@ -39,11 +39,21 @@ class DataStoreHelper extends AbstractNetworkHelper
     }
 
     /**
-     * Method returns
+     * The method that sends a request to save the user provided as a parameter.
      * @param NetworkRequestInterface $networkRequest
      * @return NetworkResponseInterface
      */
     public function storeUser(NetworkRequestInterface $networkRequest): NetworkResponseInterface
+    {
+        return $this->makeRequest($networkRequest);
+    }
+
+    /**
+     * The method used to retrieve the user's object based on the criteria provided.
+     * @param NetworkRequestInterface $networkRequest
+     * @return NetworkResponseInterface
+     */
+    public function fetchUser(NetworkRequestInterface $networkRequest): NetworkResponseInterface
     {
         return $this->makeRequest($networkRequest);
     }

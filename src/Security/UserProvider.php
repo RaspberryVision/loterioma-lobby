@@ -2,6 +2,9 @@
 
 namespace App\Security;
 
+use App\Model\DTO\Network\NetworkRequest;
+use App\Model\DTO\Network\NetworkResponse;
+use App\NetworkHelper\DataStore\DataStoreHelper;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -23,11 +26,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function loadUserByUsername($username)
     {
-        // Load a User object from your data source or throw UsernameNotFoundException.
-        // The $username argument may not actually be a username:
-        // it is whatever value is being returned by the getUsername()
-        // method in your User class.
-        throw new \Exception('TODO: fill in loadUserByUsername() inside '.__FILE__);
+        return $this->getUser($username);
     }
 
     /**
@@ -49,9 +48,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
             throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
         }
 
-        // Return a User object after making sure its data is "fresh".
-        // Or throw a UsernameNotFoundException if the user no longer exists.
-        throw new \Exception('TODO: fill in refreshUser() inside '.__FILE__);
+        return $this->getUser($user->getUsername());
     }
 
     /**
@@ -70,5 +67,29 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         // TODO: when encoded passwords are in use, this method should:
         // 1. persist the new password in the user storage
         // 2. update the $user object with $user->setPassword($newEncodedPassword);
+    }
+
+    private function getUser($username)
+    {
+        $dataStoreHelper = new DataStoreHelper();
+
+        /** @var NetworkResponse $networkResponse */
+        $networkResponse = $dataStoreHelper->fetchUser(new NetworkRequest(
+            '/members',
+            'GET',
+            'asdsad',
+            [
+                'username' => $username
+            ]
+        ));
+
+        return $this->createUser($networkResponse->getBody()[0]);
+    }
+
+    private function createUser(array $data)
+    {
+        $user = new User();
+        $user->initialize($data['id'], $data['email'], $data['password']);
+        return $user;
     }
 }

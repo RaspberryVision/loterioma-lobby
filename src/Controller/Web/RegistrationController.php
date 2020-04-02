@@ -44,7 +44,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('web_register_success');
         }
 
-        return $this->render('web/registration/register.html.twig', [
+        return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
@@ -54,7 +54,7 @@ class RegistrationController extends AbstractController
      */
     public function success(Request $request): Response
     {
-        return $this->render('web/registration/success.html.twig', [
+        return $this->render('registration/success.html.twig', [
         ]);
     }
 }
