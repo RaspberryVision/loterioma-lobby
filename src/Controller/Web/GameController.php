@@ -2,18 +2,19 @@
 
 namespace App\Controller\Web;
 
+use App\NetworkHelper\DataStore\DataStoreHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GameController extends AbstractController
 {
     /**
-     * @Route("/game", name="game")
+     * @Route("/game", name="web_game_index")
      */
-    public function index()
+    public function index(DataStoreHelper $dataStoreHelper)
     {
         return $this->render('game/index.html.twig', [
-            'controller_name' => 'GameController',
+            'games' => $dataStoreHelper->fetchGames()->getBody()
         ]);
     }
 }
