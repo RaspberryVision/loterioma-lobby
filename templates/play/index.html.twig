@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PlayController!{% endblock %}
+
+{% block body %}
+
+    {{ dump(game) }}
+    <h1>{{ game.name }}</h1>
+    <h2>{{ game.description }}</h2>
+
+    {% for i in range(game.generatorConfig.min, game.generatorConfig.max) %}
+        {{ i }},
+    {% endfor %}
+
+    <div id="game{{ game.id }}">
+
+    </div>
+
+{% endblock %}
