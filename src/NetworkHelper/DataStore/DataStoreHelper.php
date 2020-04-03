@@ -13,6 +13,8 @@
 
 namespace App\NetworkHelper\DataStore;
 
+use App\Model\DTO\Game\Game;
+use App\Model\DTO\Network\NetworkRequest;
 use App\Model\DTO\Network\NetworkRequestInterface;
 use App\Model\DTO\Network\NetworkResponseInterface;
 use App\NetworkHelper\AbstractNetworkHelper;
@@ -56,5 +58,36 @@ class DataStoreHelper extends AbstractNetworkHelper
     public function fetchUser(NetworkRequestInterface $networkRequest): NetworkResponseInterface
     {
         return $this->makeRequest($networkRequest);
+    }
+
+    /**
+     * The method that sends a request to save the object of the created game.
+     * !!! To play, you must still activate the game object.
+     * @param int $id
+     * @return NetworkResponseInterface
+     */
+    public function fetchGame(int $id): NetworkResponseInterface
+    {
+        return $this->makeRequest(new NetworkRequest(
+            '/games/' . $id,
+            'GET',
+            'sadasdas',
+            []
+        ));
+    }
+
+    /**
+     * The method that sends a request to save the object of the created game.
+     * !!! To play, you must still activate the game object.
+     * @return NetworkResponseInterface
+     */
+    public function fetchGames(): NetworkResponseInterface
+    {
+        return $this->makeRequest(new NetworkRequest(
+            '/games',
+            'GET',
+            'sadasdas',
+            []
+        ));
     }
 }
