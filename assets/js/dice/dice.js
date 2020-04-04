@@ -4,18 +4,24 @@ const ENGINE_URL = `http://localhost:9902/index.php/dice/play`;
 
 export default class DiceClient {
 
-    constructor(gameObject) {
+    constructor(gameObject, DOMHandlers) {
         this.config = gameObject;
+        this.DOMHandlers = DOMHandlers;
     }
 
     play() {
-        this.makeRequest();
+        this.makeRequest().then((data) => {
+            console.log(data);
+            this.updateScreen(data);
+        });
     }
 
     makeRequest() {
-        let response = http.requestPost(`${ENGINE_URL}/${this.config.gameId}`, this.getRequestParams());
+        return http.requestPost(`${ENGINE_URL}/${this.config.gameId}`, this.getRequestParams());
+    }
 
-        console.log(response);
+    updateScreen(data) {
+        this.getDOMElement(this.DOMHandlers.result).innerText = data.result;
     }
 
     getRequestParams() {
@@ -38,6 +44,10 @@ export default class DiceClient {
                     }
                 ]
         };
+    }
+
+    getDOMElement(selector) {
+        return document.getElementById(selector);
     }
 }
 

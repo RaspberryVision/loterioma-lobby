@@ -9,16 +9,30 @@
 
 {% block body %}
 
-    {{ dump(game) }}
-    <h1>{{ game.name }}</h1>
-    <h2>{{ game.description }}</h2>
+    <div id="game-container">
+        <div id="game-header">
+            <h1>{{ game.name }}</h1>
+        </div>
 
-    {% for i in range(game.generatorConfig.min, game.generatorConfig.max) %}
-        {{ i }},
-    {% endfor %}
+        <div id="game-result">
+            Result
+        </div>
 
-    <div id="game{{ game.id }}">
-        <div id="play">PLAY</div>
+        <div id="game-parameter">
+            <div id="game-options">
+
+                <ul id="game-numbers">
+                {% for i in range(game.generatorConfig.min, game.generatorConfig.max) %}
+                    <li>{{ i }},</li>
+                {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+
+        <div id="game-action">
+            <div id="play">PLAY</div>
+        </div>
     </div>
 
 {% endblock %}
@@ -35,6 +49,10 @@
                 min: {{ game.generatorConfig.min }},
                 max: {{ game.generatorConfig.max }},
             }
+        }
+        window.gameDOMHandlers = {
+            root: '#game-container',
+            result: 'game-result',
         }
     </script>
     {{ encore_entry_script_tags('dice') }}
