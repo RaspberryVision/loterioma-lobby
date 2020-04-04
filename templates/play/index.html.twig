@@ -15,23 +15,31 @@
         </div>
 
         <div id="game-result">
-            Result
+            <h1>Set bets ^^</h1><p class='winning'>And play!</p>
         </div>
 
         <div id="game-parameter">
             <div id="game-options">
-
-                <ul id="game-numbers">
-                {% for i in range(game.generatorConfig.min, game.generatorConfig.max) %}
-                    <li>{{ i }},</li>
-                {% endfor %}
+                <h2>Game numbers:</h2>
+                <ul id="game-numbers-list">
+                    {% for i in range(game.generatorConfig.min, game.generatorConfig.max) %}
+                        <li data-number="{{ i }}">{{ i }}</li>
+                    {% endfor %}
                 </ul>
             </div>
-
+            <div id="game-bets">
+                <h2>
+                    My bets
+                    <span id="game-bets-cost">0 ₭C</span>
+                </h2>
+                <ul id="game-bets-list">
+                    <li>Please add new bet</li>
+                </ul>
+            </div>
         </div>
 
         <div id="game-action">
-            <div id="play">PLAY</div>
+            <div id="game-next-action">Sets bets and play!</div>
         </div>
     </div>
 
@@ -51,8 +59,13 @@
             }
         }
         window.gameDOMHandlers = {
-            root: '#game-container',
+            root: 'game-container',
             result: 'game-result',
+            betsList: 'game-bets-list',
+            nextAction: 'game-next-action',
+            numbersList: 'game-numbers-list',
+            lastBets: 'game-last-bets',
+            betsCost: 'game-bets-cost'
         }
     </script>
     {{ encore_entry_script_tags('dice') }}
