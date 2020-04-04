@@ -1,4 +1,5 @@
 import http from '../http';
+import ViewHelper from "./viewHelper";
 
 const ENGINE_URL = `http://localhost:9902/index.php/dice/play`;
 
@@ -6,22 +7,31 @@ export default class DiceClient {
 
     constructor(gameObject, DOMHandlers) {
         this.config = gameObject;
-        this.DOMHandlers = DOMHandlers;
+        this.viewHelper = new ViewHelper(DOMHandlers);
+        this.currentStageIndex = 0;
+        this.bets = [];
+        this.lastBets = null;
     }
 
-    play() {
-        this.makeRequest().then((data) => {
-            console.log(data);
-            this.updateScreen(data);
-        });
+    next() {
+        switch (this.currentStageIndex) {
+            case 0:
+                this.makeRequest().then((data) => {
+                    this.currentStageIndex++;
+                    this.lastBets = this.bets;
+                    this.bets = [];
+                    this.viewHelper.renderStage(1, data);
+                });
+                break;
+            case 1:
+                this.currentStageIndex = 0;
+                this.viewHelper.renderStage(0, [], this.lastBets);
+                break;
+        }
     }
 
     makeRequest() {
         return http.requestPost(`${ENGINE_URL}/${this.config.gameId}`, this.getRequestParams());
-    }
-
-    updateScreen(data) {
-        this.getDOMElement(this.DOMHandlers.result).innerText = data.result;
     }
 
     getRequestParams() {
@@ -34,20 +44,58 @@ export default class DiceClient {
         });
     }
 
+    addBet(number, stake) {
+        if (!this.searchBet(number)) {
+            this.bets.push({
+                'number': number,
+                'stake': stake,
+                'win': this.calculateBetWin(stake)
+            });
+        } else {
+            this.updateBet(number, stake);
+        }
+
+        this.viewHelper.renderBetsList(this.bets, null);
+    }
+
+    searchBet(number) {
+        for (let bet of this.bets) {
+            if (bet.number === number) {
+                return bet.stake;
+            }
+        }
+
+        return false;
+    }
+
+    updateBet(number, stake) {
+        for (let i = this.bets.length - 1; i >= 0 ; i--) {
+            if (this.bets[i].number === number) {
+                if (0 === stake) {
+                    this.bets.splice(i, 1);
+                } else {
+                    this.bets[i].stake = stake;
+                    this.bets[i].win = this.calculateBetWin(stake)
+                }
+            }
+        }
+    }
+
+    loadLastBets() {
+        for (let bet of this.lastBets) {
+            this.addBet(bet.number, bet.stake);
+        }
+        this.viewHelper.renderBetsList(this.bets, null);
+    }
+
     getRoundParameters() {
         return {
-            "bets":
-                [
-                    {
-                        "number": 1,
-                        "stake": 10,
-                    }
-                ]
+            "bets": this.bets
         };
     }
 
-    getDOMElement(selector) {
-        return document.getElementById(selector);
+    calculateBetWin(stake) {
+        return stake * (this.config.generatorConfig.max - 1);
     }
 }
 
