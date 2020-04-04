@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- ... -->
+
+    {% block stylesheets %}
+        {# 'app' must match the first argument to addEntry() in webpack.config.js #}
+        {{ encore_entry_link_tags('dice') }}
+    {% endblock %}
+</head>
+<body>
+<!-- ... -->
+
+{% block javascripts %}
+
+{% endblock %}
+</body>
+</html>
