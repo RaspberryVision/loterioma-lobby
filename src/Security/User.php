@@ -27,6 +27,24 @@ class User implements UserInterface
     private $roles;
 
     /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     * @return User
+     */
+    public function setId(int $id): User
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
