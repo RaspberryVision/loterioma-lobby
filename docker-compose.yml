@@ -6,7 +6,7 @@ services:
         stdin_open: true
         tty: true
         ports:
-          - 9909:80
+          - 5508:80
         environment:
           - APACHE_DOCUMENT_ROOT=/var/www/html/public
         volumes:
