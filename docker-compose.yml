@@ -6,33 +6,11 @@ services:
         stdin_open: true
         tty: true
         ports:
-          - 5508:80
+          - 5701:80
         environment:
           - APACHE_DOCUMENT_ROOT=/var/www/html/public
         volumes:
           - .:/var/www/html
-        networks:
-          - my-proxy-net
-
-    loterioma_lobby_qa:
-        build: .docker/phpqa
-        container_name: loterioma_lobby_qa
-        stdin_open: true
-        tty: true
-        depends_on:
-          - loterioma_lobby
-        environment:
-          - PHPQA_HOME_DIR=/phpqa
-          - PHPQA_CODE_DIR=${PHPQA_HOME_DIR}/code
-          - PHPQA_LOGS_DIR=${PHPQA_HOME_DIR}/logs
-          - PHPQA_TEST_DIR=${PHPQA_HOME_DIR}/code
-          - PHPQA_ENGINEER_HOST=loterioma_engineer
-          - PHPQA_ENGINEER_PORT=80
-          - PHPQA_MACHINE_NAME=dev-local-rm
-          - PHPQA_COMPONENT_NAME=lobby
-        volumes:
-          - ./src:/code
-          - ./.docker/phpqa/results:/logs
         networks:
           - my-proxy-net
 
