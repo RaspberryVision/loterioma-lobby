@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello GameController!{% endblock %}
+
+{% block body %}
+
+    {% for game in games %}
+        <h1>{{ game.name }}</h1>
+        <h2>{{ game.description }}</h2>
+        <h2>{{ game.type }}</h2>
+        <a href="{{ path('web_play_index', {id: game.id}) }}">Play</a>
+    {% endfor %}
+
+{% endblock %}

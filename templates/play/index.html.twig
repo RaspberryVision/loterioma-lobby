@@ -1,0 +1,41 @@
+{% extends './base.html.twig' %}
+
+{% block title %}Hello PlayController!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('dice') }}
+{% endblock %}
+
+{% block body %}
+
+    {{ dump(game) }}
+    <h1>{{ game.name }}</h1>
+    <h2>{{ game.description }}</h2>
+
+    {% for i in range(game.generatorConfig.min, game.generatorConfig.max) %}
+        {{ i }},
+    {% endfor %}
+
+    <div id="game{{ game.id }}">
+        <div id="play">PLAY</div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        window.gameConfig = {
+            userId: {{ app.user.id }},
+            client: 'asdasdasczxczxcxzc',
+            gameId: {{ app.request.get('id') }},
+            mode: 0,
+            generatorConfig: {
+                min: {{ game.generatorConfig.min }},
+                max: {{ game.generatorConfig.max }},
+            }
+        }
+    </script>
+    {{ encore_entry_script_tags('dice') }}
+{% endblock %}
