@@ -14,6 +14,20 @@ services:
         networks:
           - my-proxy-net
 
+    loterioma_lobby_db:
+      image: mysql:5.7
+      logging:
+        driver: "none"
+      command: --default-authentication-plugin=mysql_native_password --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+      restart: on-failure
+      environment:
+        MYSQL_DATABASE: loterioma
+        MYSQL_USER: loterioma
+        MYSQL_PASSWORD: loterioma
+        MYSQL_ROOT_PASSWORD: loterioma
+      networks:
+        - my-proxy-net
+
 networks:
     my-proxy-net:
         external: true

@@ -2,9 +2,9 @@
 
 namespace App\Controller\Web;
 
+use App\Entity\User;
 use App\Model\DTO\Network\NetworkRequest;
 use App\NetworkHelper\DataStore\DataStoreHelper;
-use App\Security\User;
 use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,6 +31,10 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
             $response = $dataStoreHelper->storeUser(new NetworkRequest(
                 '/members',
                 'POST',
@@ -40,6 +44,10 @@ class RegistrationController extends AbstractController
                     'password' => $user->getPassword()
                 ]
             ));
+
+            var_dump($response);exit();
+
+
 
             return $this->redirectToRoute('web_register_success');
         }

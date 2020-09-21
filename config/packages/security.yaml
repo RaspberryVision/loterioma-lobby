@@ -2,12 +2,18 @@ security:
     encoders:
         App\Security\User:
             algorithm: bcrypt
+        App\Entity\User:
+            algorithm: auto
+
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
         app_user_provider:
-            id: App\Security\UserProvider
+            entity:
+                class: App\Entity\User
+                property: email
+        # used to reload user from session & other features (e.g. switch_user)
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -18,6 +24,8 @@ security:
             guard:
                 authenticators:
                     - App\Security\NetworkAuthenticator
+                    - App\Security\SecurityAuthenticator
+                entry_point: App\Security\SecurityAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
