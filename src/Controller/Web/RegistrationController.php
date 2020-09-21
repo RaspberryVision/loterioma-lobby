@@ -3,12 +3,14 @@
 namespace App\Controller\Web;
 
 use App\Entity\User;
+use App\Message\UserRegistration;
 use App\Model\DTO\Network\NetworkRequest;
 use App\NetworkHelper\DataStore\DataStoreHelper;
 use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -17,7 +19,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="web_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, DataStoreHelper $dataStoreHelper): Response
+    public function register(MessageBusInterface $bus, Request $request, UserPasswordEncoderInterface $passwordEncoder, DataStoreHelper $dataStoreHelper): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -45,7 +47,8 @@ class RegistrationController extends AbstractController
                 ]
             ));
 
-            var_dump($response);exit();
+            $this->dispatchMessage(new UserRegistration('Look! I created a message!'));
+
 
 
 
