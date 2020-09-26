@@ -21,6 +21,8 @@ class RegistrationController extends AbstractController
      */
     public function register(MessageBusInterface $bus, Request $request, UserPasswordEncoderInterface $passwordEncoder, DataStoreHelper $dataStoreHelper): Response
     {
+        var_dump($this->dispatchMessage(new UserRegistration('Look! I created a message!')));
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -46,11 +48,6 @@ class RegistrationController extends AbstractController
                     'password' => $user->getPassword()
                 ]
             ));
-
-            $this->dispatchMessage(new UserRegistration('Look! I created a message!'));
-
-
-
 
             return $this->redirectToRoute('web_register_success');
         }
