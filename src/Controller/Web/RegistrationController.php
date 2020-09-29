@@ -19,9 +19,12 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="web_register")
      */
-    public function register(MessageBusInterface $bus, Request $request, UserPasswordEncoderInterface $passwordEncoder, DataStoreHelper $dataStoreHelper): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, DataStoreHelper $dataStoreHelper): Response
     {
-        var_dump($this->dispatchMessage(new UserRegistration('Look! I created a message!')));
+        var_dump($this->dispatchMessage(new UserRegistration(json_encode([
+            'id' => uniqid(),
+            'name' => 'name ' . uniqid()
+        ]))));
 
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
