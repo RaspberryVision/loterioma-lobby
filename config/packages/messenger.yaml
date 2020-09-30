@@ -1,13 +1,13 @@
 framework:
   messenger:
     transports:
-      async_priority_high: '%env(MESSENGER_TRANSPORT_DSN)%'
-      async_normal:
-        dsn: "%env(MESSENGER_TRANSPORT_DSN)%"
+      async_priority_high: '%env(MESSENGER_TRANSPORT_DSN_AMQP)%'
+      async_priority_normal:
+        dsn: "%env(MESSENGER_TRANSPORT_DSN_DOCTRINE)%"
         options:
           queue_name: normal_priority
-
+      async_priority_low: '%env(MESSENGER_TRANSPORT_DSN_REDIS)%'
 
     routing:
       # Route your messages to the transports
-      'App\Message\UserRegistration': async
+      'App\Message\UserRegistration': async_priority_low
