@@ -10,4 +10,4 @@ framework:
 
     routing:
       # Route your messages to the transports
-      'App\Message\UserRegistration': async_priority_low
+      'App\Message\UserRegistration': async_priority_high

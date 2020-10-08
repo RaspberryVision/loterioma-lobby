@@ -5,6 +5,7 @@ namespace App\Controller\Web;
 use App\Entity\User;
 use App\Message\UserRegistration;
 use App\Model\DTO\Network\NetworkRequest;
+use App\Model\DTO\User\UserDTO;
 use App\NetworkHelper\DataStore\DataStoreHelper;
 use App\Form\RegistrationFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,13 +20,11 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="web_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, DataStoreHelper $dataStoreHelper): Response
-    {
-        var_dump($this->dispatchMessage(new UserRegistration(json_encode([
-            'id' => uniqid(),
-            'name' => 'name ' . uniqid()
-        ]))));
-
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        DataStoreHelper $dataStoreHelper
+    ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
@@ -42,22 +41,32 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $response = $dataStoreHelper->storeUser(new NetworkRequest(
-                '/members',
-                'POST',
-                'sadasdas',
-                [
-                    'email' => $user->getEmail(),
-                    'password' => $user->getPassword()
-                ]
-            ));
+            $response = $dataStoreHelper->storeUser(
+                new NetworkRequest(
+                    '/members',
+                    'POST',
+                    'sadasdas',
+                    [
+                        'email' => $user->getEmail(),
+                        'password' => $user->getPassword(),
+                    ]
+                )
+            );
+
+            $this->dispatchMessage(
+                new UserRegistration(json_encode((new UserDTO($user->getEmail(), $user->getPassword()))->dto()))
+            );
+            exit();
 
             return $this->redirectToRoute('web_register_success');
         }
 
-        return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
-        ]);
+        return $this->render(
+            'registration/register.html.twig',
+            [
+                'registrationForm' => $form->createView(),
+            ]
+        );
     }
 
     /**
@@ -65,7 +74,10 @@ class RegistrationController extends AbstractController
      */
     public function success(Request $request): Response
     {
-        return $this->render('registration/success.html.twig', [
-        ]);
+        return $this->render(
+            'registration/success.html.twig',
+            [
+            ]
+        );
     }
 }
