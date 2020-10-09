@@ -41,22 +41,9 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $response = $dataStoreHelper->storeUser(
-                new NetworkRequest(
-                    '/members',
-                    'POST',
-                    'sadasdas',
-                    [
-                        'email' => $user->getEmail(),
-                        'password' => $user->getPassword(),
-                    ]
-                )
-            );
-
             $this->dispatchMessage(
                 new UserRegistration(json_encode((new UserDTO($user->getEmail(), $user->getPassword()))->dto()))
             );
-            exit();
 
             return $this->redirectToRoute('web_register_success');
         }
