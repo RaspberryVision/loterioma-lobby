@@ -22,7 +22,7 @@
             <div id="game-options">
                 <h2>Game numbers:</h2>
                 <ul id="game-numbers-list">
-                    {% for i in range(game.generatorConfig.min, game.generatorConfig.max) %}
+                    {% for i in range(game.generatorConfig.min|default(1), game.generatorConfig.max|default(10)) %}
                         <li data-number="{{ i }}">{{ i }}</li>
                     {% endfor %}
                 </ul>
