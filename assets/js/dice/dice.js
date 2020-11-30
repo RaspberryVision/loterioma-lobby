@@ -1,6 +1,6 @@
 import http from '../http';
 
-const ENGINE_URL = `http://localhost:9902/index.php/dice/play`;
+const ENGINE_URL = `http://localhost:10001/index.php/play`;
 
 export default class DiceClient {
 
@@ -13,7 +13,7 @@ export default class DiceClient {
     }
 
     makeRequest() {
-        let response = http.requestPost(`${ENGINE_URL}/${this.config.gameId}`, this.getRequestParams());
+        let response = http.requestPost(`${ENGINE_URL}`, this.getRequestParams());
 
         console.log(response);
     }

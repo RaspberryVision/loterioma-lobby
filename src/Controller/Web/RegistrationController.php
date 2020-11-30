@@ -22,8 +22,7 @@ class RegistrationController extends AbstractController
      */
     public function register(
         Request $request,
-        UserPasswordEncoderInterface $passwordEncoder,
-        DataStoreHelper $dataStoreHelper
+        UserPasswordEncoderInterface $passwordEncoder
     ): Response {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -41,9 +40,9 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->dispatchMessage(
-                new UserRegistration(json_encode((new UserDTO($user->getEmail(), $user->getPassword()))->dto()))
-            );
+//            $this->dispatchMessage(
+//                new UserRegistration(json_encode((new UserDTO($user->getEmail(), $user->getPassword()))->dto()))
+//            );
 
             return $this->redirectToRoute('web_register_success');
         }
