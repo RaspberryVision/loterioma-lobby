@@ -32,6 +32,12 @@ class Game
      */
     private $type;
 
+    /**
+     * @ORM\OneToOne(targetEntity=GeneratorConfig::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $generatorConfig;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,18 @@ class Game
     public function setType(int $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getGeneratorConfig(): ?GeneratorConfig
+    {
+        return $this->generatorConfig;
+    }
+
+    public function setGeneratorConfig(GeneratorConfig $generatorConfig): self
+    {
+        $this->generatorConfig = $generatorConfig;
 
         return $this;
     }
