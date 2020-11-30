@@ -1,0 +1,162 @@
+body {
+    background-color: gray;
+}
+
+#game-container {
+    vertical-align: middle;;
+    width: 80%;
+    margin: 50px auto;
+    overflow: hidden;
+}
+
+#game-header {
+    background: #fff;
+    text-align: center;
+    padding: 40px;
+    border-bottom: 30px solid gray;
+}
+
+#game-header h1 {
+    font-size: 34px;
+}
+
+#game-result {
+    width: calc(50% - 10px);
+    float: left;
+    text-align: center;
+    font-size: 30px;
+    padding: 100px 0;
+    background: #fff;
+    margin-right:20px;
+}
+
+#game-result .loss-number {
+    color: red;
+}
+
+#game-result .win-number {
+    color: green;
+}
+
+#game-result .win {
+    color: green;
+}
+
+#game-result .lost {
+    color: red;
+}
+
+#game-parameter {
+    width: calc(50% - 10px);
+    float: left;
+    background: #fff;
+    overflow: hidden;
+}
+
+#game-action {
+    margin-top: 50px;
+    width: 100%;
+    background: #fff;
+    text-align: center;
+    float: left;
+    padding: 30px 10px;
+}
+
+#game-action #game-next-action {
+    display: inline-block;
+    background: red;
+    color: #fff;
+    padding: 20px 45px;
+    cursor: pointer;
+}
+
+#game-options {
+    float: left;
+    width: calc(70% - 40px);
+    background: #fff;
+    padding: 20px;
+}
+
+#game-bets {
+    float: left;
+    width: calc(30% - 40px);
+    background: #fff;
+    padding: 20px;
+}
+
+#game-numbers-list {
+    padding-left: 0px;
+    list-style-type: none;
+}
+
+#game-numbers-list li {
+    display: inline-block;
+    width: 30px;
+    height: 15px;
+    padding: 10px 0;
+    margin: 2px;
+    background: #fff;
+    text-align: center;
+    float: left;
+    cursor: pointer;
+    font-size: 16px;
+    border: 1px solid gray;
+    transition: all .5s;
+}
+
+#game-numbers-list li:hover {
+    border: 1px solid blue;
+    background: blue;
+    color: #fff;
+}
+
+#game-numbers-list .bet {
+    background: gray;
+    color: #fff;
+    font-weight: bold;
+}
+
+#game-numbers-list .win {
+    background: green;
+    color: #fff;
+}
+
+#game-numbers-list .lost {
+    background: #ff0000;
+    color: #fff;
+}
+
+#game-numbers-list .last-win {
+    background: rgba(35, 220, 35, 0.8);
+    color: #fff;
+    font-weight: bold;
+}
+
+#game-numbers-list .last-lost {
+    background: rgba(255, 0, 0, 0.8);
+    color: #fff;
+    font-weight: bold;
+}
+
+#game-bets-list {
+    padding-left: 0px;
+}
+
+#game-bets-list li {
+    list-style-type: none;
+}
+
+#game-bets-list .loss-bet {
+    color: red;
+    text-decoration: line-through;
+}
+
+#game-bets-list .win-bet {
+    color: green;
+    font-weight: bold;
+}
+
+#game-bets-cost {
+    font-size: 16px;
+    float:right;
+}

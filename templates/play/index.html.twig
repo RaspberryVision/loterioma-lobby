@@ -9,16 +9,38 @@
 
 {% block body %}
 
-    {{ dump(game) }}
-    <h1>{{ game.name }}</h1>
-    <h2>{{ game.description }}</h2>
+    <div id="game-container">
+        <div id="game-header">
+            <h1>{{ game.name }}</h1>
+        </div>
 
-    {% for i in range(1, 10) %}
-        {{ i }},
-    {% endfor %}
+        <div id="game-result">
+            <h1>Set bets ^^</h1><p class='winning'>And play!</p>
+        </div>
 
-    <div id="game{{ game.id }}">
-        <div id="play">PLAY</div>
+        <div id="game-parameter">
+            <div id="game-options">
+                <h2>Game numbers:</h2>
+                <ul id="game-numbers-list">
+                    {% for i in range(game.generatorConfig.min, game.generatorConfig.max) %}
+                        <li data-number="{{ i }}">{{ i }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="game-bets">
+                <h2>
+                    My bets
+                    <span id="game-bets-cost">0 ₭C</span>
+                </h2>
+                <ul id="game-bets-list">
+                    <li>Please add new bet</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="game-action">
+            <div id="game-next-action">Sets bets and play!</div>
+        </div>
     </div>
 
 {% endblock %}
@@ -27,14 +49,23 @@
     {{ parent() }}
     <script type="text/javascript">
         window.gameConfig = {
-            userId: {{ app.user.id|default(1) }},
+            userId: {{ app.user.id }},
             client: 'asdasdasczxczxcxzc',
-            gameId: {{ app.request.get('id')|default(2) }},
+            gameId: {{ app.request.get('id') }},
             mode: 0,
             generatorConfig: {
-                min: {{ 1 }},
-                max: {{ 9 }},
+                min: {{ game.generatorConfig.min }},
+                max: {{ game.generatorConfig.max }},
             }
+        }
+        window.gameDOMHandlers = {
+            root: 'game-container',
+            result: 'game-result',
+            betsList: 'game-bets-list',
+            nextAction: 'game-next-action',
+            numbersList: 'game-numbers-list',
+            lastBets: 'game-last-bets',
+            betsCost: 'game-bets-cost'
         }
     </script>
     {{ encore_entry_script_tags('dice') }}
