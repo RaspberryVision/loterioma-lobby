@@ -49,7 +49,7 @@
     {{ parent() }}
     <script type="text/javascript">
         window.gameConfig = {
-            userId: {{ app.user.id }},
+            userId: {{ app.user.id|default(1) }},
             client: 'asdasdasczxczxcxzc',
             gameId: {{ app.request.get('id') }},
             mode: 0,
