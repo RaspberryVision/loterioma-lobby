@@ -23,8 +23,6 @@ class GameFixtures extends Fixture
             ->setFormat([1]);
 
         $game->setGeneratorConfig($config);
-        // $product = new Product();
-        // $manager->persist($product);
 
         $manager->persist($game);
         $manager->flush();
