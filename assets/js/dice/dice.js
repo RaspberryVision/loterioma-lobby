@@ -98,4 +98,3 @@ export default class DiceClient {
         return stake * (this.config.generatorConfig.max - 1);
     }
 }
-
