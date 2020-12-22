@@ -8,10 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/games")
+ */
 class GameController extends AbstractController
 {
     /**
-     * @Route("/game", name="web_game_index")
+     * @Route("", name="web_game_index")
      * @param GameRepository $gameRepository
      * @return Response
      */
