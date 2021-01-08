@@ -1,0 +1,27 @@
+app:
+  title: Loterioma Manager
+
+menu:
+  dashboard:
+    title: Dashboard
+  games:
+    title: Games
+
+user:
+  logout: Logout
+
+game:
+  title: Games
+  name: Name
+  type: Type
+  description: Description
+  no_items: No items
+  actions:
+    title: Actions
+    create: Create new
+    edit: Edit
+    show: Show
+    delete: Delete
+  types:
+    1: Dice game
+    2: Slots game
