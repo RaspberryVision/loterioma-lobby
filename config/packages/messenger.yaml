@@ -13,3 +13,4 @@ framework:
       'App\Message\UserRegistration': async_priority_high
       'App\Message\Game\GameCreated': async_priority_high
       'App\Message\Game\GameUpdated': async_priority_high
+      'App\Message\Game\GameSynced': async_priority_high
