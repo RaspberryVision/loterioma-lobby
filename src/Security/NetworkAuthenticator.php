@@ -90,7 +90,7 @@ class NetworkAuthenticator extends AbstractFormLoginAuthenticator implements Pas
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('web_dashboard'));
+        return new RedirectResponse($this->urlGenerator->generate('web_dashboard_index'));
     }
 
     protected function getLoginUrl()
