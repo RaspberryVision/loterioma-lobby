@@ -9,39 +9,11 @@
 
 {% block body %}
 
-    <div id="game-container">
-        <div id="game-header">
-            <h1>{{ game.name }}</h1>
-        </div>
+    {% if game.type == 1 %}
+        {% include 'play/type/dice.html.twig' %}
+    {% else %}
 
-        <div id="game-result">
-            <h1>Set bets ^^</h1><p class='winning'>And play!</p>
-        </div>
-
-        <div id="game-parameter">
-            <div id="game-options">
-                <h2>Game numbers:</h2>
-                <ul id="game-numbers-list">
-                    {% for i in range(game.generatorConfig.min|default(1), game.generatorConfig.max|default(10)) %}
-                        <li data-number="{{ i }}">{{ i }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div id="game-bets">
-                <h2>
-                    My bets
-                    <span id="game-bets-cost">0 ₭C</span>
-                </h2>
-                <ul id="game-bets-list">
-                    <li>Please add new bet</li>
-                </ul>
-            </div>
-        </div>
-
-        <div id="game-action">
-            <div id="game-next-action">Sets bets and play!</div>
-        </div>
-    </div>
+    {% endif %}
 
 {% endblock %}
 
