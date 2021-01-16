@@ -1,7 +1,7 @@
 import http from '../http';
 import ViewHelper from "./viewHelper";
 
-const ENGINE_URL = `http://localhost:9902/index.php/dice/play`;
+const ENGINE_URL = `http://localhost:10001/base/play`;
 
 export default class DiceClient {
 
@@ -31,7 +31,7 @@ export default class DiceClient {
     }
 
     makeRequest() {
-        return http.requestPost(`${ENGINE_URL}/${this.config.gameId}`, this.getRequestParams());
+        return http.requestPost(`${ENGINE_URL}?id=${this.config.gameId}`, this.getRequestParams());
     }
 
     getRequestParams() {
@@ -48,7 +48,7 @@ export default class DiceClient {
         if (!this.searchBet(number)) {
             this.bets.push({
                 'number': number,
-                'stake': stake,
+                'amount': stake,
                 'win': this.calculateBetWin(stake)
             });
         } else {
@@ -74,7 +74,7 @@ export default class DiceClient {
                 if (0 === stake) {
                     this.bets.splice(i, 1);
                 } else {
-                    this.bets[i].stake = stake;
+                    this.bets[i].amount = stake;
                     this.bets[i].win = this.calculateBetWin(stake)
                 }
             }
