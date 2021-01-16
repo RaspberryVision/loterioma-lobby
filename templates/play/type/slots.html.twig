@@ -3,33 +3,145 @@
         <h1>{{ game.name }}</h1>
     </div>
 
-    <div id="game-result">
-        <h1>Set bets ^^</h1>
-        <p class='winning'>And play!</p>
-    </div>
+    <div id="slots-machine">
 
-    <div id="game-parameter">
-        <div id="game-options">
-            <h2>Game numbers:</h2>
-            <ul id="game-numbers-list">
-                {% for i in range(game.generatorConfig.min|default(1), game.generatorConfig.max|default(10)) %}
-                    <li data-number="{{ i }}">{{ i }}</li>
-                {% endfor %}
-            </ul>
+        <div id="slots-machine-top">
+            HERE MACHINE NAME
         </div>
-        <div id="game-bets">
-            <h2>
-                My bets
-                <span id="game-bets-cost">0 ₭C</span>
-            </h2>
-            <ul id="game-bets-list">
-                <li>Please add new bet</li>
-            </ul>
-        </div>
-    </div>
 
-    <div id="game-action">
-        <div id="game-next-action">Sets bets and play!</div>
-    </div>
+        <div id="matrix">
+            <div class="wheel">
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+            </div>
+            <div class="wheel">
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+            </div>
+            <div class="wheel">
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+            </div>
+            <div class="wheel">
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+            </div>
+            <div class="wheel">
+                <div class="field"></div>
+                <div class="field"></div>
+                <div class="field"></div>
+            </div>
+        </div>
+
+        <div id="slots-machine-bottom">
+            <div id="reset" class="machine-slots-button">Reset</div>
+
+            <div id="generate" class="machine-slots-button">Generate</div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script>
+            $(function() {
+
+                $(document).on('click', '#generate', function() {
+
+                    $.get("http://localhost:10002/base/play?id=5", {
+                        seed: 123,
+                        range: {
+                            min: 1,
+                            max: 5
+                        },
+                        matrix: [
+                            [-1, -1, -1],
+                            [-1, -1, -1],
+                            [-1, -1, -1],
+                            [-1, -1, -1],
+                            [-1, -1, -1]
+                        ]
+                    }, function(matrix) {
+
+                        for (const [indexX, row] of matrix.entries()) {
+
+                            for (const [indexY, field] of row.entries()) {
+                                $('.wheel').eq(indexX).children('.field').eq(indexY)
+                                    .removeClass().addClass('field symbol-' + field).text(field);
+                            }
+                        }
+                    });
+                });
+
+            });
+        </script>
 </div>
 
+<style type="text/css">
+    #slots-machine {
+        background: gray;
+        padding: 30px;
+        width: 1000px;
+        height: 80%;
+        margin: 0px auto;
+    }
+
+    #matrix {
+        border: 5px solid blue;
+        background: orange;
+        height: 90px;
+        width: 150px;
+        margin: 0px auto;
+    }
+
+    #slots-machine-top {
+        margin-bottom: 20px;
+        font-size: 40px;
+        text-align: center;
+    }
+
+    #slots-machine-bottom {
+        text-align: right;
+        margin-top: 15px;
+    }
+
+    .machine-slots-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background: orange;
+        font-size: 22px;
+    }
+
+    .wheel {
+        width: 30px;
+        float: left;
+    }
+
+    .field {
+        width: 30px;
+        height: 30px;
+        float: left;
+        border: 1px solid red;
+    }
+
+    .symbol-1 {
+        background: purple;
+    }
+
+    .symbol-2 {
+        background: orange;
+    }
+
+    .symbol-3 {
+        background: green;
+    }
+
+    .symbol-4 {
+        background: violet;
+    }
+
+    .symbol-5 {
+        background: gray;
+    }
+</style>
