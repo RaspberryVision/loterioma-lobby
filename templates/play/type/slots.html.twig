@@ -10,7 +10,6 @@
         </div>
 
         <div id="matrix">
-
             {% for row in game.generatorConfig.format %}
                 <div class="wheel">
                     {% for field in row %}
@@ -19,6 +18,8 @@
                 </div>
             {% endfor %}
         </div>
+
+        <div class="slots-machine-status"></div>
 
         <div id="slots-machine-bottom">
             <div id="reset" class="machine-slots-button">Reset</div>

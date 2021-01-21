@@ -15,6 +15,11 @@ $(document).on('click', '#generate', function () {
                     .removeClass().addClass('field symbol-' + field).text(field);
             }
         }
-        console.log(data.status);
+
+        if (data.status === 2) {
+            $('.slots-machine-status').text('WIN');
+        } else {
+            $('.slots-machine-status').text('LOST');
+        }
     });
 });
