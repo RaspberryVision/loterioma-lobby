@@ -11,7 +11,7 @@ $(document).on('click', '#generate', function () {
         let data = matrix.body;
         for (const [indexX, row] of data.result.entries()) {
             for (const [indexY, field] of row.entries()) {
-                $('.wheel').eq(indexX).children('.field').eq(indexY)
+                $('.slots-row').eq(indexX).children('.field').eq(indexY)
                     .removeClass().addClass('field symbol-' + field).text(field);
             }
         }

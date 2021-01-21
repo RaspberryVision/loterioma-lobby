@@ -5,13 +5,9 @@
 
     <div id="slots-machine">
 
-        <div id="slots-machine-top">
-            HERE MACHINE NAME
-        </div>
-
         <div id="matrix">
             {% for row in game.generatorConfig.format %}
-                <div class="wheel">
+                <div class="slots-row">
                     {% for field in row %}
                         <div class="field"> {{ field }}</div>
                     {% endfor %}
