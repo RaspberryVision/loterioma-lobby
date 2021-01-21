@@ -10,31 +10,14 @@
         </div>
 
         <div id="matrix">
-            <div class="wheel">
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-            </div>
-            <div class="wheel">
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-            </div>
-            <div class="wheel">
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-            </div>
-            <div class="wheel">
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-            </div>
-            <div class="wheel">
-                <div class="field"></div>
-                <div class="field"></div>
-                <div class="field"></div>
-            </div>
+
+            {% for row in game.generatorConfig.format %}
+                <div class="wheel">
+                    {% for field in row %}
+                        <div class="field"> {{ field }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
         </div>
 
         <div id="slots-machine-bottom">
@@ -43,94 +26,8 @@
             <div id="generate" class="machine-slots-button">Generate</div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-        <script>
-            $(function() {
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 
-                $(document).on('click', '#generate', function() {
-
-                    $.get("http://localhost:10002/base/play?id=5", {
-                        bet: 10
-                    }, function(matrix) {
-
-                        let data = matrix.body;
-                        for (const [indexX, row] of data.result.entries()) {
-                            for (const [indexY, field] of row.entries()) {
-                                $('.wheel').eq(indexX).children('.field').eq(indexY)
-                                    .removeClass().addClass('field symbol-' + field).text(field);
-                            }
-                        }
-                    });
-                });
-
-            });
-        </script>
+    </div>
 </div>
-
-<style type="text/css">
-    #slots-machine {
-        background: gray;
-        padding: 30px;
-        width: 1000px;
-        height: 80%;
-        margin: 0px auto;
-    }
-
-    #matrix {
-        border: 5px solid blue;
-        background: orange;
-        height: 90px;
-        width: 150px;
-        margin: 0px auto;
-    }
-
-    #slots-machine-top {
-        margin-bottom: 20px;
-        font-size: 40px;
-        text-align: center;
-    }
-
-    #slots-machine-bottom {
-        text-align: right;
-        margin-top: 15px;
-    }
-
-    .machine-slots-button {
-        display: inline-block;
-        padding: 10px 20px;
-        background: orange;
-        font-size: 22px;
-    }
-
-    .wheel {
-        width: 30px;
-        float: left;
-    }
-
-    .field {
-        width: 30px;
-        height: 30px;
-        float: left;
-        border: 1px solid red;
-    }
-
-    .symbol-1 {
-        background: purple;
-    }
-
-    .symbol-2 {
-        background: orange;
-    }
-
-    .symbol-3 {
-        background: green;
-    }
-
-    .symbol-4 {
-        background: violet;
-    }
-
-    .symbol-5 {
-        background: gray;
-    }
-</style>
