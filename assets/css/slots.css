@@ -1,0 +1,101 @@
+#slots-machine {
+    background: gray;
+    padding: 30px;
+    width: 1000px;
+    height: 80%;
+    margin: 0px auto;
+}
+
+#matrix {
+    border: 5px solid blue;
+    background: orange;
+    height: 90px;
+    width: 150px;
+    margin: 0px auto;
+}
+
+#slots-machine-top {
+    margin-bottom: 20px;
+    font-size: 40px;
+    text-align: center;
+}
+
+#slots-machine-bottom {
+    text-align: right;
+    margin-top: 15px;
+}
+
+.machine-slots-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: orange;
+    font-size: 22px;
+}
+
+.wheel {
+    width: 30px;
+    float: left;
+}
+
+.field {
+    width: 30px;
+    height: 30px;
+    float: left;
+    border: 1px solid red;
+}
+
+.symbol-1 {
+    background: purple;
+}
+
+.symbol-2 {
+    background: green;
+}
+
+.symbol-3 {
+    background: sienna;
+}
+
+.symbol-4 {
+    background: violet;
+}
+
+.symbol-5 {
+    background: gray;
+}
+
+.symbol-6 {
+    background: orange;
+}
+
+.symbol-7 {
+    background: pink;
+}
+
+.symbol-8 {
+    background: yellow;
+}
+
+.symbol-8 {
+    background: brown;
+}
+
+.symbol-9 {
+    background: blue;
+}
+
+.symbol-10 {
+    background: red;
+}
+
+.symbol-11 {
+    background: darkgoldenrod;
+}
+
+.symbol-12 {
+    background: darkolivegreen;
+}
+
+.symbol-13 {
+    background: darkcyan;
+}
