@@ -18,6 +18,12 @@ $(document).on('click', '#generate', function () {
 
         if (data.status === 2) {
             $('.slots-machine-status').text('WIN');
+
+            for (const [indexX, row] of data.wonCombinations.entries()) {
+                for (const [indexY, field] of row.fields.entries()) {
+                    $('.slots-row').eq(indexX).children('.field').eq(indexY).addClass('won');
+                }
+            }
         } else {
             $('.slots-machine-status').text('LOST');
         }
