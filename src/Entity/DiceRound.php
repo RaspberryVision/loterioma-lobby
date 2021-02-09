@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\DiceRoundRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=DiceRoundRepository::class)
@@ -83,6 +84,10 @@ class DiceRound
         return $this->user;
     }
 
+    /**
+     * @param User|UserInterface|null $user
+     * @return $this
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
