@@ -32,6 +32,11 @@ class DiceRound
      */
     private $results = [];
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="diceRounds")
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class DiceRound
     public function setResults(?array $results): self
     {
         $this->results = $results;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
