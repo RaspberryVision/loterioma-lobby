@@ -21,8 +21,8 @@
     {{ parent() }}
     <script type="text/javascript">
         window.gameConfig = {
-            userId: {{ app.user.id|default(1) }},
-            client: 'asdasdasczxczxcxzc',
+            userId: {{ app.user.id|default(-1) }},
+            client: 1,
             gameId: {{ app.request.get('id') }},
             mode: 0,
             generatorConfig: {

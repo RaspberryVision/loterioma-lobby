@@ -27,7 +27,8 @@ class PlayController extends AbstractController
         $round = new DiceRound();
         $round->setBets([])
             ->setMatched($data['matched'])
-            ->setResults($data['result']);
+            ->setResults($data['result'])
+            ->setUser($this->getUser());
 
         $entityManager->persist($round);
         $entityManager->flush();
