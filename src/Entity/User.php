@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -33,6 +35,16 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=DiceRound::class, mappedBy="user")
+     */
+    private $diceRounds;
+
+    public function __construct()
+    {
+        $this->diceRounds = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -110,5 +122,36 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|DiceRound[]
+     */
+    public function getDiceRounds(): Collection
+    {
+        return $this->diceRounds;
+    }
+
+    public function addDiceRound(DiceRound $diceRound): self
+    {
+        if (!$this->diceRounds->contains($diceRound)) {
+            $this->diceRounds[] = $diceRound;
+            $diceRound->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiceRound(DiceRound $diceRound): self
+    {
+        if ($this->diceRounds->contains($diceRound)) {
+            $this->diceRounds->removeElement($diceRound);
+            // set the owning side to null (unless already changed)
+            if ($diceRound->getUser() === $this) {
+                $diceRound->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
