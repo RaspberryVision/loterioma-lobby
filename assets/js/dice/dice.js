@@ -2,6 +2,7 @@ import http from '../http';
 import ViewHelper from "./viewHelper";
 
 const ENGINE_URL = `http://localhost:10001/base/play`;
+const BACKEND_URL = `http://localhost:5701/play/backend`;
 
 export default class DiceClient {
 
@@ -17,6 +18,12 @@ export default class DiceClient {
         switch (this.currentStageIndex) {
             case 0:
                 this.makeRequest().then((data) => {
+                    http.requestPost(`${BACKEND_URL}`, JSON.stringify({
+                        'status': data.status,
+                        'result': data.result,
+                        'matched': data.matched
+                    }));
+
                     this.currentStageIndex++;
                     this.lastBets = this.bets;
                     this.bets = [];
@@ -69,7 +76,7 @@ export default class DiceClient {
     }
 
     updateBet(number, stake) {
-        for (let i = this.bets.length - 1; i >= 0 ; i--) {
+        for (let i = this.bets.length - 1; i >= 0; i--) {
             if (this.bets[i].number === number) {
                 if (0 === stake) {
                     this.bets.splice(i, 1);
