@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PlayController!{% endblock %}
+
+
+{% block body %}
+
+    {% for round in rounds %}
+
+        {{ round.id }}
+        {% for bet in round.bets %}
+            <p>Number {{ bet.number }} - {{ bet.rate }}K</p>
+        {% endfor %}
+        {% for matched in round.matched %}
+            <p>Number {{ matched.number }} - {{ matched.rate }}K</p>
+        {% endfor %}
+        {{ round.results[0][0] }}
+
+    {% endfor %}
+
+{% endblock %}

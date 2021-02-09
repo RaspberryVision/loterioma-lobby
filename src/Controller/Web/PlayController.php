@@ -5,6 +5,7 @@ namespace App\Controller\Web;
 use App\Entity\DiceRound;
 use App\Entity\Game;
 use App\NetworkHelper\DataStore\DataStoreHelper;
+use App\Repository\DiceRoundRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,6 +34,16 @@ class PlayController extends AbstractController
 
         return $this->json([
             'data' => $round->getId()
+        ]);
+    }
+
+    /**
+     * @Route("/history", name="web_play_history")
+     */
+    public function history(Request $request, DiceRoundRepository $repository)
+    {
+        return $this->render('play/history.html.twig', [
+            'rounds' => $repository->findAll()
         ]);
     }
 
