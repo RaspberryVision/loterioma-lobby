@@ -15,9 +15,9 @@ Stack:
 - logout action
 
 Dice game scenario:
-1. User after login can select dice game
-2. Then we need to manage game flow
-3. User can show games history [In progress]
+1. ~~User after login can select dice game~~
+2. ~~Then we need to manage game flow~~
+3. ~~User can show games history~~ 
 4. Show specific page details
 
 Save user in objects:
