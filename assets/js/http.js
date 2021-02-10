@@ -15,7 +15,7 @@ export default class Http {
             xhr.open(method, url);
             xhr.onload = function () {
                 if (this.status === 200) {
-                    resolve(JSON.parse(xhr.response).body);
+                    resolve(JSON.parse(xhr.response));
                 } else {
                     reject({
                         status: this.status,
