@@ -53,6 +53,12 @@ class PlayController extends AbstractController
      */
     public function cashier(Request $request)
     {
+        if ($request->get('action') === 'pay-out') {
+            return $this->json([
+                'sessionId' => -1
+            ]);
+        }
+
         return $this->json([
             'sessionId' => uniqid(),
             'amount' => 1000
