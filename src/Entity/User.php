@@ -41,9 +41,15 @@ class User implements UserInterface
      */
     private $diceRounds;
 
+    /**
+     * @ORM\OneToMany(targetEntity=GameSession::class, mappedBy="user")
+     */
+    private $gameSessions;
+
     public function __construct()
     {
         $this->diceRounds = new ArrayCollection();
+        $this->gameSessions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,6 +155,37 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($diceRound->getUser() === $this) {
                 $diceRound->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|GameSession[]
+     */
+    public function getGameSessions(): Collection
+    {
+        return $this->gameSessions;
+    }
+
+    public function addGameSession(GameSession $gameSession): self
+    {
+        if (!$this->gameSessions->contains($gameSession)) {
+            $this->gameSessions[] = $gameSession;
+            $gameSession->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGameSession(GameSession $gameSession): self
+    {
+        if ($this->gameSessions->contains($gameSession)) {
+            $this->gameSessions->removeElement($gameSession);
+            // set the owning side to null (unless already changed)
+            if ($gameSession->getUser() === $this) {
+                $gameSession->setUser(null);
             }
         }
 
