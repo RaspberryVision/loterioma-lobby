@@ -22,6 +22,8 @@
                                 <div class="btn-group">
                                     <a href="{{ path('web_play_index', {id: game.id}) }}"
                                        class="btn btn-sm btn-outline-secondary">Play</a>
+                                    <a href="{{ path('web_play_history') }}"
+                                       class="btn btn-sm btn-outline-primary">Show history</a>
                                 </div>
                                 <small class="text-muted">{{ game|game_type|trans }}</small>
                             </div>
