@@ -49,6 +49,17 @@ class PlayController extends AbstractController
     }
 
     /**
+     * @Route("/cashier", name="web_play_cashier")
+     */
+    public function cashier(Request $request)
+    {
+        return $this->json([
+            'sessionId' => uniqid(),
+            'amount' => 1000
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="web_play_index")
      */
     public function index(Game $game)
