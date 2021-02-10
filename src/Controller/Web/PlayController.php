@@ -44,7 +44,7 @@ class PlayController extends AbstractController
     public function history(Request $request, DiceRoundRepository $repository)
     {
         return $this->render('play/history.html.twig', [
-            'rounds' => $repository->findAll()
+            'rounds' => $repository->findBy(['user' => $this->getUser()])
         ]);
     }
 
