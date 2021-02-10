@@ -51,10 +51,16 @@ class User implements UserInterface
      */
     private $wallet;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="user")
+     */
+    private $transactions;
+
     public function __construct()
     {
         $this->diceRounds = new ArrayCollection();
         $this->gameSessions = new ArrayCollection();
+        $this->transactions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,6 +215,37 @@ class User implements UserInterface
         // set the owning side of the relation if necessary
         if ($wallet->getUser() !== $this) {
             $wallet->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Transaction[]
+     */
+    public function getTransactions(): Collection
+    {
+        return $this->transactions;
+    }
+
+    public function addTransaction(Transaction $transaction): self
+    {
+        if (!$this->transactions->contains($transaction)) {
+            $this->transactions[] = $transaction;
+            $transaction->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTransaction(Transaction $transaction): self
+    {
+        if ($this->transactions->contains($transaction)) {
+            $this->transactions->removeElement($transaction);
+            // set the owning side to null (unless already changed)
+            if ($transaction->getUser() === $this) {
+                $transaction->setUser(null);
+            }
         }
 
         return $this;

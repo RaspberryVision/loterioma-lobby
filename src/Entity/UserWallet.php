@@ -33,6 +33,18 @@ class UserWallet
      */
     private $blocked;
 
+    /**
+     * UserWallet constructor.
+     * @param $amount
+     * @param $blocked
+     */
+    public function __construct($amount = 0, $blocked = 0)
+    {
+        $this->amount = $amount;
+        $this->blocked = $blocked;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

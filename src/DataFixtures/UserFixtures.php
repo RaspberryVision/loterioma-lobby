@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Game;
 use App\Entity\GeneratorConfig;
 use App\Entity\User;
+use App\Entity\UserWallet;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -31,6 +32,8 @@ class UserFixtures extends Fixture
             $user = new User();
             $user->setEmail('user' . $i . '@email.pl');
             $user->setPassword($this->passwordEncoder->encodePassword($user, '123456'));
+
+            $user->setWallet(new UserWallet(1000));
 
             $manager->persist($user);
         }
