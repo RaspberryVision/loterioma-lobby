@@ -23,6 +23,6 @@ export default class Cashier {
     }
 
     makeRequest(act) {
-        return http.requestPost(`${BACKEND_URL}?action=${act}`, JSON.stringify({}));
+        return http.requestPost(`${BACKEND_URL}/${this.config.gameId}?action=${act}`, JSON.stringify({}));
     }
 }

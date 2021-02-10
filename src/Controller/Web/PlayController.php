@@ -4,6 +4,7 @@ namespace App\Controller\Web;
 
 use App\Entity\DiceRound;
 use App\Entity\Game;
+use App\Entity\GameSession;
 use App\NetworkHelper\DataStore\DataStoreHelper;
 use App\Repository\DiceRoundRepository;
 use Doctrine\ORM\EntityManager;
@@ -49,9 +50,9 @@ class PlayController extends AbstractController
     }
 
     /**
-     * @Route("/cashier", name="web_play_cashier")
+     * @Route("/bank", name="web_play_bank")
      */
-    public function cashier(Request $request)
+    public function bank(Request $request)
     {
         if ($request->get('action') === 'pay-out') {
             return $this->json([
@@ -60,7 +61,34 @@ class PlayController extends AbstractController
         }
 
         return $this->json([
-            'sessionId' => uniqid(),
+            'sessionId' => 1,
+            'amount' => 1000
+        ]);
+    }
+
+    /**
+     * @Route("/cashier/{id}", name="web_play_cashier")
+     */
+    public function cashier(Request $request, EntityManagerInterface $entityManager, Game $game)
+    {
+        if ($request->get('action') === 'pay-out') {
+            return $this->json([
+                'sessionId' => -1
+            ]);
+        }
+
+        $session = new GameSession();
+        $session->setUser($this->getUser())
+            ->setAmount(100)
+            ->setToken(uniqid())
+            ->setGame($game)
+            ->setCreatedAt(new \DateTime());
+
+        $entityManager->persist($session);
+        $entityManager->flush();
+
+        return $this->json([
+            'sessionId' => $session->getToken(),
             'amount' => 1000
         ]);
     }
