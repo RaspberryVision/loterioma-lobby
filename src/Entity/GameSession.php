@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\GameSessionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=GameSessionRepository::class)
@@ -42,6 +43,11 @@ class GameSession
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="gameSessions")
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $token;
 
     public function getId(): ?int
     {
@@ -101,9 +107,25 @@ class GameSession
         return $this->user;
     }
 
+    /**
+     * @param User|UserInterface|null $user
+     * @return $this
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }

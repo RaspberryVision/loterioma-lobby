@@ -46,6 +46,11 @@ class User implements UserInterface
      */
     private $gameSessions;
 
+    /**
+     * @ORM\OneToOne(targetEntity=UserWallet::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $wallet;
+
     public function __construct()
     {
         $this->diceRounds = new ArrayCollection();
@@ -187,6 +192,23 @@ class User implements UserInterface
             if ($gameSession->getUser() === $this) {
                 $gameSession->setUser(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getWallet(): ?UserWallet
+    {
+        return $this->wallet;
+    }
+
+    public function setWallet(UserWallet $wallet): self
+    {
+        $this->wallet = $wallet;
+
+        // set the owning side of the relation if necessary
+        if ($wallet->getUser() !== $this) {
+            $wallet->setUser($this);
         }
 
         return $this;
