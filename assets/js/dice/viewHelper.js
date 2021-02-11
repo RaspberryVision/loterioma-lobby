@@ -15,6 +15,7 @@ export default class ViewHelper {
                 this.renderResult(currentRound);
                 this.markWinNumber(currentRound.status, currentRound.result[0][0]);
                 this.markBetsList(currentRound.result[0][0]);
+                this.updateGameSessionAmount(currentRound.sessionId, currentRound.amount);
                 this.updateNextButton('Next round!');
                 break;
         }

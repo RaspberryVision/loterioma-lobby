@@ -24,15 +24,15 @@ export default class DiceClient {
             case 0:
                 this.makeRequest().then((data) => {
                     http.requestPost(`${BACKEND_URL}`, JSON.stringify({
-                        'status': data.status,
-                        'result': data.result,
-                        'matched': data.matched
+                        'status': data.body.status,
+                        'result': data.body.result,
+                        'matched': data.body.matched
                     }));
 
                     this.currentStageIndex++;
                     this.lastBets = this.bets;
                     this.bets = [];
-                    this.viewHelper.renderStage(1, data);
+                    this.viewHelper.renderStage(1, data.body);
                 });
                 break;
             case 1:
