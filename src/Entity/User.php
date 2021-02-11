@@ -52,7 +52,7 @@ class User implements UserInterface
     private $wallet;
 
     /**
-     * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Transaction::class, mappedBy="user", cascade={"PERSIST"})
      */
     private $transactions;
 

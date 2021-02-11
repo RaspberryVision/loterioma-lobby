@@ -5,6 +5,8 @@ namespace App\Controller\Web;
 use App\Entity\DiceRound;
 use App\Entity\Game;
 use App\Entity\GameSession;
+use App\Entity\Transaction;
+use App\Entity\User;
 use App\NetworkHelper\DataStore\DataStoreHelper;
 use App\Repository\DiceRoundRepository;
 use Doctrine\ORM\EntityManager;
@@ -34,9 +36,11 @@ class PlayController extends AbstractController
         $entityManager->persist($round);
         $entityManager->flush();
 
-        return $this->json([
-            'data' => $round->getId()
-        ]);
+        return $this->json(
+            [
+                'data' => $round->getId(),
+            ]
+        );
     }
 
     /**
@@ -44,9 +48,12 @@ class PlayController extends AbstractController
      */
     public function history(Request $request, DiceRoundRepository $repository)
     {
-        return $this->render('play/history.html.twig', [
-            'rounds' => $repository->findBy(['user' => $this->getUser()])
-        ]);
+        return $this->render(
+            'play/history.html.twig',
+            [
+                'rounds' => $repository->findBy(['user' => $this->getUser()]),
+            ]
+        );
     }
 
     /**
@@ -55,15 +62,19 @@ class PlayController extends AbstractController
     public function bank(Request $request)
     {
         if ($request->get('action') === 'pay-out') {
-            return $this->json([
-                'sessionId' => -1
-            ]);
+            return $this->json(
+                [
+                    'sessionId' => -1,
+                ]
+            );
         }
 
-        return $this->json([
-            'sessionId' => 1,
-            'amount' => 1000
-        ]);
+        return $this->json(
+            [
+                'sessionId' => 1,
+                'amount' => 1000,
+            ]
+        );
     }
 
     /**
@@ -72,25 +83,51 @@ class PlayController extends AbstractController
     public function cashier(Request $request, EntityManagerInterface $entityManager, Game $game)
     {
         if ($request->get('action') === 'pay-out') {
-            return $this->json([
-                'sessionId' => -1
-            ]);
+            $transaction = new Transaction();
+            $transaction->setUser($this->getUser())
+                ->setAmount(100)
+                ->setType(2);
+
+
+            return $this->json(
+                [
+                    'sessionId' => -1,
+                ]
+            );
+        }
+        /** @var User $user */
+        $user = $this->getUser();
+
+        if ($user->getWallet()->getAmount() < 100) {
+            return;
         }
 
+        $transaction = new Transaction();
+        $transaction->setUser($user)
+            ->setAmount(100)
+            ->setType(1);
+
+        $user->addTransaction($transaction);
+
+        $user->getWallet()->setAmount($user->getWallet()->getAmount() - 100);
+
         $session = new GameSession();
-        $session->setUser($this->getUser())
+        $session->setUser($user)
             ->setAmount(100)
             ->setToken(uniqid())
             ->setGame($game)
             ->setCreatedAt(new \DateTime());
 
+        $entityManager->persist($user);
         $entityManager->persist($session);
         $entityManager->flush();
 
-        return $this->json([
-            'sessionId' => $session->getToken(),
-            'amount' => 1000
-        ]);
+        return $this->json(
+            [
+                'sessionId' => $session->getToken(),
+                'amount' => 1000,
+            ]
+        );
     }
 
     /**
@@ -98,8 +135,11 @@ class PlayController extends AbstractController
      */
     public function index(Game $game)
     {
-        return $this->render('play/index.html.twig', [
-            'game' => $game
-        ]);
+        return $this->render(
+            'play/index.html.twig',
+            [
+                'game' => $game,
+            ]
+        );
     }
 }

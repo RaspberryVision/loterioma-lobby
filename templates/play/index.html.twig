@@ -9,6 +9,8 @@
 
 {% block body %}
 
+    <p>Amount: {{ app.user.wallet.amount }}</p>
+    <p>In game: <span id="game-session-amount">0</span></p>
     {% if game.type == 1 %}
         {% include 'play/type/dice.html.twig' %}
     {% else %}
