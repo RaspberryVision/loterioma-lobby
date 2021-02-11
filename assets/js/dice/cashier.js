@@ -1,7 +1,7 @@
 import http from '../http';
 import ViewHelper from "./viewHelper";
 
-const BACKEND_URL = `http://localhost:5701/play/cashier`;
+const BACKEND_URL = `http://localhost:10001/base/session`;
 
 export default class Cashier {
 
@@ -27,6 +27,6 @@ export default class Cashier {
     }
 
     makeRequest(act) {
-        return http.requestPost(`${BACKEND_URL}/${this.config.gameId}?action=${act}`, JSON.stringify({}));
+        return http.requestPost(`${BACKEND_URL}?id=${this.config.gameId}&action=${act}`, JSON.stringify({}));
     }
 }
