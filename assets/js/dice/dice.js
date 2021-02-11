@@ -15,6 +15,11 @@ export default class DiceClient {
     }
 
     next() {
+        if (!window.sessionId) {
+            console.log('No session defined');
+            return false;
+        }
+
         switch (this.currentStageIndex) {
             case 0:
                 this.makeRequest().then((data) => {
@@ -47,7 +52,8 @@ export default class DiceClient {
             "client": this.config.client,
             "userId": this.config.userId,
             "mode": this.config.mode,
-            "parameters": this.getRoundParameters()
+            "parameters": this.getRoundParameters(),
+            "sessionId": window.sessionId
         });
     }
 

@@ -16,7 +16,6 @@ export default class ViewHelper {
                 this.markWinNumber(currentRound.status, currentRound.result[0][0]);
                 this.markBetsList(currentRound.result[0][0]);
                 this.updateNextButton('Next round!');
-                this.updateGameSessionAmount(30);
                 break;
         }
     }
@@ -123,7 +122,10 @@ export default class ViewHelper {
         });
     }
 
-    updateGameSessionAmount(newValue) {
+    updateGameSessionAmount(sessionId, newValue) {
+        this.getDOMElementById('game-session-id').then(function (gameSessionElement) {
+            gameSessionElement.innerText = sessionId;
+        });
         this.getDOMElementById('game-session-amount').then(function (gameSessionElement) {
             gameSessionElement.innerText = newValue;
         });

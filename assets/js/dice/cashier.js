@@ -12,17 +12,18 @@ export default class Cashier {
 
     payIn() {
         this.makeRequest('pay-in').then((data) => {
+            window.sessionId = data.sessionId;
             this.config.sessionId = data.sessionId;
             this.config.amount = data.amount;
-            this.viewHelper.updateGameSessionAmount(data.amount);
+            this.viewHelper.updateGameSessionAmount(data.sessionId, data.amount);
         });
     }
 
     payOut() {
         this.makeRequest('pay-out').then((data) => {
             this.config.sessionId = data.sessionId;
-            this.config.amount = 0;
-            this.viewHelper.updateGameSessionAmount(0);
+            this.config.amount = data.amount;
+            this.viewHelper.updateGameSessionAmount(data.sessionId, data.amount);
         });
     }
 

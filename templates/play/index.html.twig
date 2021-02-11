@@ -11,6 +11,7 @@
 
     <p>Amount: {{ app.user.wallet.amount }}</p>
     <p>In game: <span id="game-session-amount">0</span></p>
+    <small>Session: <span id="game-session-id">-</span></small>
     {% if game.type == 1 %}
         {% include 'play/type/dice.html.twig' %}
     {% else %}
