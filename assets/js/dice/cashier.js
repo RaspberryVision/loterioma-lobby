@@ -28,6 +28,7 @@ export default class Cashier {
     }
 
     makeRequest(act) {
-        return http.requestPost(`${BACKEND_URL}?id=${this.config.gameId}&action=${act}`, JSON.stringify({}));
+        return http.requestPost(`${BACKEND_URL}?id=${this.config.gameId}&action=${act}`,
+            JSON.stringify({...window.gameConfig, ...{amount: 100}}));
     }
 }
