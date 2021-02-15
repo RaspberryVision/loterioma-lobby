@@ -123,7 +123,10 @@ export default class ViewHelper {
         });
     }
 
-    updateGameSessionAmount(sessionId, newValue) {
+    updateGameSessionAmount(sessionId, newValue, wallet) {
+        this.getDOMElementById('app-wallet-amount').then(function (gameSessionElement) {
+            gameSessionElement.innerText = wallet;
+        });
         this.getDOMElementById('game-session-id').then(function (gameSessionElement) {
             gameSessionElement.innerText = sessionId;
         });

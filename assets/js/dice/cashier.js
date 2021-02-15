@@ -12,10 +12,11 @@ export default class Cashier {
 
     payIn() {
         this.makeRequest('pay-in').then((data) => {
+            console.log(data);
             window.sessionId = data.sessionId;
             this.config.sessionId = data.sessionId;
             this.config.amount = data.amount;
-            this.viewHelper.updateGameSessionAmount(data.sessionId, data.amount);
+            this.viewHelper.updateGameSessionAmount(data.sessionId, data.amount, data.wallet);
         });
     }
 

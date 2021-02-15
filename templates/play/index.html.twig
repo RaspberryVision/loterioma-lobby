@@ -9,7 +9,7 @@
 
 {% block body %}
 
-    <p>Amount: {{ app.user.wallet.amount }}</p>
+    <p>Amount: <span id="app-wallet-amount">{{ app.user.wallet.amount }}</span></p>
     <p>In game: <span id="game-session-amount">0</span></p>
     <small>Session: <span id="game-session-id">-</span></small>
     {% if game.type == 1 %}
