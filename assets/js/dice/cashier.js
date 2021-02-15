@@ -30,6 +30,12 @@ export default class Cashier {
 
     makeRequest(act) {
         return http.requestPost(`${BACKEND_URL}?id=${this.config.gameId}&action=${act}`,
-            JSON.stringify({...window.gameConfig, ...{amount: 100}}));
+            JSON.stringify({
+                ...window.gameConfig,
+                ...{
+                    amount: 100,
+                    sessionId: window.sessionId
+                }
+            }));
     }
 }
