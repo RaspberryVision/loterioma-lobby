@@ -45,9 +45,8 @@ export default class SlotsClient {
 
                     console.log(data);
 
-                    $('#app-wallet-amount').text(0);
-                    $('#game-session-id').text(1);
-                    $('#game-session-amount').text(1);
+                    $('#game-session-id').text(data.sessionId);
+                    $('#game-session-amount').text(data.amount);
 
                 });
                 break;
