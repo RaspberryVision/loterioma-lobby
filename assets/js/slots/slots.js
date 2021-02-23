@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 require('./../../css/slots.css');
 
-$(document).on('click', '#generate', function () {
+$(document).on('click', '#game-next-action', function () {
 
     $.ajax("http://localhost:10002/base/play?id=5", {
         bet: 10
