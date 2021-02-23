@@ -1,7 +1,7 @@
 import http from '../http';
 import ViewHelper from "./viewHelper";
 
-const BACKEND_URL = `http://localhost:10001/base/session`;
+const BACKEND_URL = `http://localhost:10002/base/session`;
 
 export default class Cashier {
 
