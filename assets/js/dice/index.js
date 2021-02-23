@@ -1,11 +1,9 @@
 import DiceClient from './dice.js';
-import Cashier from "./cashier";
 import $ from 'jquery';
 
 require('./../../css/dice.css');
 
 const gameClient = new DiceClient(window.gameConfig, window.gameDOMHandlers);
-const cashier = new Cashier(window.gameConfig);
 
 $(document).on('click', `#${gameClient.viewHelper.DOMHandlers.nextAction}`, function () {
     gameClient.next();
@@ -42,20 +40,5 @@ $(document).on('click', `#${gameClient.viewHelper.DOMHandlers.numbersList} li`, 
 $(document).on('click', `#${gameClient.viewHelper.DOMHandlers.lastBets}`, function () {
     gameClient.loadLastBets();
 });
-
-$(document).on('click', `#game-pay-in-action`, function () {
-    console.log('PayIn Request Start')
-    cashier.payIn();
-    console.log('PayIn Request End')
-});
-
-$(document).on('click', `#game-pay-out-action`, function () {
-    console.log('PayOut Request Start')
-    cashier.payOut();
-    console.log('PayOut Request End')
-});
-
-
-
 
 

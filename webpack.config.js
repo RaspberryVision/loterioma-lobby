@@ -25,6 +25,7 @@ Encore
      */
     .addEntry('dice', './assets/js/dice/index.js')
     .addEntry('slots', './assets/js/slots/slots.js')
+    .addEntry('cashier', './assets/js/cashier/index.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
