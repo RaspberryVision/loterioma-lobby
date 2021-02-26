@@ -2,8 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Game;
-use App\Entity\GeneratorConfig;
 use App\Entity\User;
 use App\Entity\UserWallet;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -28,16 +26,40 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 15; $i++) {
+        foreach ($this->getData() as $item) {
             $user = new User();
-            $user->setEmail('user' . $i . '@email.pl');
-            $user->setPassword($this->passwordEncoder->encodePassword($user, '123456'));
-
-            $user->setWallet(new UserWallet(1000));
+            $user->setEmail($item['email'])
+                ->setPassword($this->passwordEncoder->encodePassword($user, $item['password']))
+                ->setSuid($item['suid'])
+                ->setWallet(new UserWallet($item['amount']));
 
             $manager->persist($user);
         }
 
         $manager->flush();
+    }
+
+    private function getData()
+    {
+        return [
+            [
+                'email' => 'email1@o2.pl',
+                'password' => '123456',
+                'suid' => '870ff240-6c4a-4760-ae22-ac08feb40bd5',
+                'amount' => 1000,
+            ],
+            [
+                'email' => 'email2@o2.pl',
+                'password' => '123456',
+                'suid' => '0e887485-d133-4d6b-b36c-5f29dd92f6e6',
+                'amount' => 1000,
+            ],
+            [
+                'email' => 'email3@o2.pl',
+                'password' => '123456',
+                'suid' => '23bec26f-a64d-4d93-be1a-5c204a168333',
+                'amount' => 1000,
+            ],
+        ];
     }
 }

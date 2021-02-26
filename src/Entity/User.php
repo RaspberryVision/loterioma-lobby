@@ -21,6 +21,11 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @ORM\Column(type="uuid", nullable=true)
+     */
+    private $suid;
+
+    /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -247,6 +252,25 @@ class User implements UserInterface
                 $transaction->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSuid()
+    {
+        return $this->suid;
+    }
+
+    /**
+     * @param mixed $suid
+     * @return User
+     */
+    public function setSuid($suid)
+    {
+        $this->suid = $suid;
 
         return $this;
     }
