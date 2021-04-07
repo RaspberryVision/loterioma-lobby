@@ -20,8 +20,14 @@
 
     <div id="game-action">
         <div id="game-next-action" class="machine-slots-button">Sets bets and play!</div>
-        <div id="game-pay-in-action">Pay</div>
-        <div id="game-pay-out-action">Withdraw</div>
+        <div>
+            <label for="game-pay-in-amount">PayIn amount</label><input type="text" id="game-pay-in-amount"/>
+            <div id="game-pay-in-action">Pay</div>
+        </div>
+        <div>
+            <label for="game-pay-out-amount">Withdraw amount</label><input type="text" id="game-pay-out-amount"/>
+            <div id="game-pay-out-action">Withdraw</div>
+        </div>
     </div>
 {% endblock %}
 
@@ -30,6 +36,7 @@
     <script type="text/javascript">
         window.gameConfig = {
             userId: {{ app.user.id|default(-1) }},
+            suid: '{{ app.user.suid|default(-1) }}',
             client: 1,
             gameId: {{ app.request.get('id') }},
             mode: 0,
@@ -49,6 +56,6 @@
         }
     </script>
     {{ encore_entry_script_tags('slots') }}
-{#    {{ encore_entry_script_tags('dice') }}#}
+    {# {{ encore_entry_script_tags('dice') }} #}
     {{ encore_entry_script_tags('cashier') }}
 {% endblock %}

@@ -16,6 +16,12 @@ export default class ViewHelper {
         });
     }
 
+    getPayInAmount() {
+        return this.getDOMElementById('game-pay-in-amount').then(function (element) {
+            return element.value;
+        })
+    }
+
     async getDOMElementById(selector) {
         return document.getElementById(selector);
     }

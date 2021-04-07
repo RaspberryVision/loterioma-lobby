@@ -21,6 +21,8 @@ security:
         main:
             anonymous: lazy
             provider: app_user_provider
+            form_login:
+                default_target_path: web_game_index
             guard:
                 authenticators:
                     - App\Security\NetworkAuthenticator

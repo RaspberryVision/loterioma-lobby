@@ -51,7 +51,7 @@ class UserFixtures extends Fixture
             [
                 'email' => 'email2@o2.pl',
                 'password' => '123456',
-                'suid' => '0e887485-d133-4d6b-b36c-5f29dd92f6e6',
+                'suid' => '7f40c0f6-1e15-4d1a-8310-da99abb61742',
                 'amount' => 1000,
             ],
             [
